@@ -27,3 +27,13 @@ def employee_key(employees: list, id_request: int):
                         callback_data=f'выбрать_{id_request}_{employee.user_id}')
     keyboard.adjust(1)
     return keyboard.as_markup(resize_keyboard=True)
+
+
+def del_employee(employees):
+    keyboard = InlineKeyboardBuilder()
+
+    for employee in employees:
+        keyboard.button(text=f'{employee.first_name}',
+                        callback_data=f'del employee_{employee.user_id}')
+    keyboard.adjust(1)
+    return keyboard.as_markup(resize_keyboard=True)

@@ -1,6 +1,6 @@
 from data_base.create_models import Employees
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 
 async def add_employee(session: AsyncSession, data: dict):
@@ -57,3 +57,17 @@ async def update_status_employee(session: AsyncSession, user_id: int,
     await session.commit()
     await session.refresh(employee)
     return employee
+
+
+async def del_employee(session: AsyncSession, user_id: int):
+    """
+    Функция удаляет сотрудника из БД
+    :param session: AsyncSession
+    :param user_id: int
+    :return:
+    """
+    query = (
+        delete(Employees).filter(Employees.user_id == user_id)
+    )
+    await session.execute(query)
+    await session.commit()
